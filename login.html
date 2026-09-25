@@ -1,1 +1,245 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anonymous Chat CMC — Login</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,500&family=Caveat:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #fbf7ec;
+    --rule: #c7d0e3;
+    --ink: #2a2620;
+    --ink-dim: #7a7162;
+    --red: #9c2b22;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; margin:0; }
+  body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family:'IBM Plex Sans', system-ui, sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    position:relative;
+    overflow-x:hidden;
+  }
+  .card{
+    position:relative;
+    width:100%; max-width:400px;
+    background:
+      repeating-linear-gradient(var(--paper) 0 37px, var(--rule) 37px 38px);
+    background-position: 0 128px;
+    border:1px solid var(--rule);
+    border-radius:2px;
+    padding:26px 30px 30px;
+    box-shadow: 0 12px 30px rgba(42,38,32,0.12);
+  }
+  .letterhead{ display:flex; align-items:flex-start; gap:14px; padding-bottom:14px; }
+  .rx-mark{
+    font-family:'Playfair Display', serif;
+    font-style:italic; font-weight:600;
+    font-size:40px; color:var(--red); line-height:1; flex-shrink:0;
+  }
+  .letterhead-text{ padding-top:4px; }
+  .clinic-name{ font-family:'Playfair Display', serif; font-weight:600; font-size:19px; color:var(--ink); line-height:1.2; }
+  .clinic-sub{ font-family:'Caveat',cursive; font-size:16px; color:var(--ink-dim); margin-top:1px; }
+  .divider{ border:none; border-top:2px solid var(--ink); border-bottom:1px solid var(--ink); height:3px; margin:0 0 20px; }
+  h1{
+    font-family:'Caveat', cursive; font-weight:700;
+    font-size:26px; line-height:1.2;
+    margin:0 0 4px; color:var(--ink);
+  }
+  .sub{ color:var(--ink-dim); font-size:13px; margin:0 0 24px; line-height:1.5; font-style:italic; }
+  label{ display:block; font-size:11px; letter-spacing:0.6px; text-transform:uppercase; color:var(--ink-dim); margin:0 0 6px; }
+  .field{ margin-bottom:20px; }
+  input{
+    width:100%;
+    background:transparent;
+    border:none;
+    border-bottom:1.5px dashed var(--ink-dim);
+    border-radius:0;
+    padding:6px 2px 8px;
+    color:var(--ink);
+    font-family:'Caveat',cursive;
+    font-size:20px;
+    outline:none;
+    transition:border-color .15s ease;
+  }
+  input::placeholder{ color:#b7ae9c; font-family:'IBM Plex Sans',sans-serif; font-size:13px; }
+  input:focus{ border-color: var(--red); }
+  .row{ display:flex; justify-content:space-between; align-items:center; margin:2px 0 26px; }
+  .row a{ color:var(--red); font-size:12.5px; text-decoration:none; }
+  .row a:hover{ text-decoration:underline; }
+  button{
+    width:100%;
+    background: transparent;
+    color: var(--red);
+    border:2px dashed var(--red);
+    border-radius:6px;
+    padding:12px;
+    font-family:'IBM Plex Sans',sans-serif;
+    font-weight:600;
+    font-size:13.5px;
+    letter-spacing:0.8px;
+    text-transform:uppercase;
+    cursor:pointer;
+    transform:rotate(-1.2deg);
+    transition:filter .15s ease, transform .15s ease;
+  }
+  button:hover{ filter:brightness(0.96); transform:rotate(-1.2deg) scale(1.01); }
+  button:active{ transform:rotate(-1.2deg) scale(0.98); }
+  .msg{ font-size:12.5px; margin-top:14px; min-height:16px; font-style:italic; color:var(--ink-dim); }
+  .msg.error{ color:var(--red); font-style:normal; }
+  .footer{
+    margin-top:24px; padding-top:14px;
+    border-top:1px dashed var(--rule);
+    font-size:12.5px; color:var(--ink-dim); text-align:center;
+  }
+  .footer a{ color:var(--red); text-decoration:none; font-weight:500; }
+  .footer a:hover{ text-decoration:underline; }
+  :focus-visible{ outline:2px solid var(--red); outline-offset:2px; }
+</style>
+</head>
+<body>
 
+<div class="card">
+  <div class="letterhead">
+    <div class="rx-mark">℞</div>
+    <div class="letterhead-text">
+      <div class="clinic-name">Anonymous Chat CMC</div>
+      <div class="clinic-sub">verified by roll number, seen by no one</div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <h1>Sign in, stay unseen</h1>
+  <p class="sub">Your identity is checked once, at the door. Inside, only your roll number speaks.</p>
+
+  <form id="loginForm">
+    <div class="field">
+      <label for="roll">Roll number</label>
+      <input id="roll" type="text" inputmode="numeric" placeholder="e.g. 2024-045" autocomplete="username" required>
+    </div>
+    <div class="field">
+      <label for="pass">Password</label>
+      <input id="pass" type="password" placeholder="••••••••" autocomplete="current-password" required>
+    </div>
+    <div class="row">
+      <span></span>
+      <a href="#" id="forgotLink">Forgot password?</a>
+    </div>
+    <button type="submit">Enter anonymously</button>
+    <div class="msg" id="msg"></div>
+  </form>
+
+  <div class="footer">
+    New here? <a href="#" id="signupLink">Verify with ID card</a>
+  </div>
+</div>
+
+<!--
+  ===================================================================
+  FIREBASE CONNECTION — fill in after you connect this repo to Firebase
+  ===================================================================
+  1. Get your web app config from Firebase Console → Project settings → General → Your apps.
+  2. Paste it into firebaseConfig below.
+  3. Enable Email/Password sign-in in Firebase Console → Authentication → Sign-in method.
+     (Roll numbers are mapped to a fake email like "2024045@anonymous-chat-cmc.app"
+     internally, since Firebase Auth needs an email — the user never sees this.)
+  4. Once configured, login/signup will work as-is. Until then, the form shows
+     a friendly message instead of failing silently.
+-->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  // Paste your Firebase project config here:
+  const firebaseConfig = {
+    // apiKey: "...",
+    // authDomain: "...",
+    // projectId: "...",
+    // appId: "..."
+  };
+
+  const isConfigured = Object.keys(firebaseConfig).length > 0;
+  let auth = null;
+  if (isConfigured) {
+    const app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+  }
+
+  function rollToEmail(roll) {
+    const clean = roll.trim().replace(/[^a-zA-Z0-9]/g, "");
+    return `${clean}@anonymous-chat-cmc.app`;
+  }
+
+  const form = document.getElementById("loginForm");
+  const msg = document.getElementById("msg");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const roll = document.getElementById("roll").value;
+    const pass = document.getElementById("pass").value;
+
+    if (!isConfigured) {
+      msg.textContent = "Firebase not connected yet — add your config in login.html to enable sign-in.";
+      msg.className = "msg info";
+      return;
+    }
+
+    try {
+      msg.textContent = "Signing in…";
+      msg.className = "msg info";
+      await signInWithEmailAndPassword(auth, rollToEmail(roll), pass);
+      msg.textContent = "Signed in.";
+      msg.className = "msg info";
+      window.location.href = "chat.html";
+    } catch (err) {
+      msg.textContent = "Roll number or password is incorrect.";
+      msg.className = "msg error";
+    }
+  });
+
+  document.getElementById("signupLink").addEventListener("click", async (e) => {
+    e.preventDefault();
+    if (!isConfigured) {
+      msg.textContent = "Firebase not connected yet — add your config in login.html to enable sign-up.";
+      msg.className = "msg info";
+      return;
+    }
+    const roll = document.getElementById("roll").value;
+    const pass = document.getElementById("pass").value;
+    if (!roll || !pass) {
+      msg.textContent = "Enter a roll number and password first, then tap this again to create an account.";
+      msg.className = "msg info";
+      return;
+    }
+    try {
+      msg.textContent = "Creating account…";
+      msg.className = "msg info";
+      await createUserWithEmailAndPassword(auth, rollToEmail(roll), pass);
+      msg.textContent = "Account created. Signing in…";
+      msg.className = "msg info";
+    } catch (err) {
+      msg.textContent = "Could not create account — that roll number may already be registered.";
+      msg.className = "msg error";
+    }
+  });
+
+  document.getElementById("forgotLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    msg.textContent = "Password reset isn't wired up yet — ask Claude to add it once Firebase is connected.";
+    msg.className = "msg info";
+  });
+</script>
+</body>
+</html>
